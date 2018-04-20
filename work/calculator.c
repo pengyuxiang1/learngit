@@ -25,13 +25,14 @@ int main()
 	symStack sys;
 	syminitStack(&sys,20);
 	initStack(&sqs,20);
-	
+		
     char *str = (char *) malloc (sizeof(char) * 100);               //获取表达式(不带＝)  	
 	printf("请输入你的算式：\n");
 	printf("（注：请用英文输入括号，不支持浮点数运算,不用输入等号）\n"); 
 	scanf("%s",str);                                               
 	
 	//不知道为什么，一加上括号，就是会多出几个循环，所以只好出此下策，手动添加\0了 
+	
 	int c;
 	c=strlen(str);
 	str[c+1]='\0'; 
