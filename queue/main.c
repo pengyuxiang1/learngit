@@ -24,9 +24,9 @@ int main(void)
 	InitAQueue(&AQ);
 	LQueue LQ;
 	InitLQueue(&LQ);	
-	
 	void *e;
 	int choose1,choose2,choose3;
+
 	
 
 	printf("\t选择循环队列还是链式队列\n");
@@ -88,7 +88,7 @@ int main(void)
 					break;
 				}
 				case 6:{
-					printf("队列长度为:%d",LengthAQueue(&AQ));
+					printf("队列长度为:%d\n",LengthAQueue(&AQ));
 					break;
 				}
 				case 7:{
@@ -108,14 +108,16 @@ int main(void)
 					break;
 				}
 				case 10:{
-					if(TraverseAQueue(&AQ,APrint)==TRUE){
+					if(TraverseAQueue(&AQ,APrint)){
 						printf("遍历完成\n");
 					}
 					break;
 				}
-				default :printf("退出循环队列\n");//continue;
+				default :printf("输入0退出\n");//continue;
 			}
 		}
+		
+		
 		if(choose1==2)
 		{
 			printf("\t循环队列\n");
@@ -135,6 +137,26 @@ int main(void)
 			}
 			switch(choose2){
 				case 1:{
+					printf("输入要输入的数据的类型\n1.int\t2.char\t3.float\n");
+              		scanf("%d",&choose3);
+              		switch(choose3)
+              		{
+                   		case 1:{
+                   			LQ.data_size=sizeof(int);
+                            break;
+                        }
+                    	case 2:
+                        {
+                        	LQ.data_size=sizeof(char);
+                            break;
+                        }
+                    	case 3:
+                        {
+                        	LQ.data_size=sizeof(float);
+                                break;
+                        }
+                    	default:printf("输入无效,回到功能界面\n");
+                    }
 					InitLQueue(&LQ);
 					printf("初始化成功\n");
 					break;
@@ -153,55 +175,46 @@ int main(void)
 				}
 				case 4:{
 					if(GetHeadLQueue(&LQ,&e)==TRUE){
-						LPrint(e);
-					}
+						if(choose3==1){
+							LPrint_int(e);	
+						}
+						if(choose3==2){
+							LPrint_char(e);
+						}
+						if(choose3==3){
+							LPrint_float(e);
+						}
+					}	
 					else printf("队列为空\n");
 					break;
-				}
+					
+				} 
 				case 5:{
 					printf("队列长度为:%d\n",LengthLQueue(&LQ));
 					break;
 				}
 				case 6:{
-					printf("输入要输入的数据的类型\n1.int\t2.char\t3.float\n");
-              		scanf("%d",&choose3);
-            		printf("输入要输入的数据:\n");
-              		switch(choose3)
-              		{
-                   		case 1:{
-                   			int s;
-               	           	scanf(" %d",&s);
-                          	if(EnLQueue(&LQ,&s)==TRUE)
-                            	printf("入队成功\n");
-                           	else printf("入队失败\n");
-                            break;
-                        }
-                    	case 2:
-                        {
-                        	char c;
-                            scanf(" %c",&c);
-                            if(EnLQueue(&LQ,&c)==TRUE)
-                                printf("入队成功\n");
-                            else
-                               	printf("入队失败\n");
-                                break;
-                        }
-                    	case 3:
-                        {
-                        	float f;
-                            scanf(" %f",&f);
-                            if(EnLQueue(&LQ,&f)==TRUE)
-                                printf("入队成功\n");
-                            else
-                                printf("入队失败\n");
-                                break;
-                        }
-                    	default:printf("输入无效\n");
-                    }
+					printf("请输入数据:\n");
+					if(choose3==1){
+						int a;
+						scanf(" %d",&a);
+						EnLQueue(&LQ,&a);
+					} 
+					if(choose3==2){
+						char a;
+						scanf(" %c",&a);
+						EnLQueue(&LQ,&a);
+					}
+					if(choose3==3){
+						float a;
+						scanf(" %f",&a);
+						EnLQueue(&LQ,&a);
+					}
+              		printf("入队成功\n");
                     break;
 				}
 				case 7:{
-					if(DeLQueue(&LQ)==TRUE){
+					if(DeLQueue(&LQ)){
 						printf("出队成功\n");
 					}
 					else printf("出队失败\n"); 
@@ -209,16 +222,27 @@ int main(void)
 				}
 				case 8:{
 					ClearLQueue(&LQ);
+					printf("清楚完成\n");
 					break;
 				}
 				case 9:{
-					if(TraverseLQueue(&LQ,LPrint)==TRUE){
+					void (*foo)(void*q);
+					if(choose3==1){
+						foo=LPrint_int;	
+					}
+					if(choose3==2){
+						foo=LPrint_char;
+					}
+					if(choose3==3){
+						foo=LPrint_float;
+					}
+					if(TraverseLQueue(&LQ,foo)){
 						printf("遍历成功\n");
 					}
 					else printf("遍历失败\n");
 					break;
 				} 
-				default:printf("退出程序\n");
+				default:printf("输入0退出程序\n");
 			}
 		}
 	}while(choose2!=0);

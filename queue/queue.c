@@ -149,7 +149,7 @@ void my_scanf(AQueue *AQ)
 	char c;
 	float d; 
 	
-	do{
+	//do{
 		printf("首先，你可以选择一个输入的数据类型\n");
 		printf("1.int 2.char 3.float 4.退出\n");
 		scanf(" %d",&a);
@@ -193,16 +193,19 @@ void my_scanf(AQueue *AQ)
 			}
 			default :printf("请输入1~4\n");
 		}
-	}while(a!=4);
+//	}while(a!=4);
 } 
 
+
 //链式队列
+
+
 void InitLQueue(LQueue *Q){
-	Q->front=NULL;
-	Q->rear=NULL;
-	Q->data_size=0;
+	Q->front=(Node*)malloc(Q->data_size);
+	Q->front->next=NULL;
+	Q->rear=Q->front;
 }
- 
+//OK 
  
 void DestoryLQueue(LQueue *Q){
 	Node *p1=NULL,*p2=NULL;
@@ -212,41 +215,43 @@ void DestoryLQueue(LQueue *Q){
 		free(p1);
 		p1=p2;
 	}
-	free(p1);
-	Q->front=NULL;
-	Q->rear=NULL;
+	//free(p1);
+	Q->front=p1;
+	//Q->rear=NULL;
 }
-
+// ok 
 Status IsEmptyLQueue(const LQueue *Q){
-	if(Q->front==NULL){
+	if(Q->front==Q->rear){
 		return TRUE;
 	} 
 	else return FALSE;
 }
 
 Status GetHeadLQueue(LQueue *Q, void **e){
-	if(IsEmptyLQueue(Q)==TRUE){
+	if(IsEmptyLQueue(Q)){
 		return FALSE; 
 	}
 	*e=Q->front->data;
 	return TRUE;
-} //修改为双重指针void** 
+}                                     
+//问题一 
+//修改为双重指针void** 
 
 int LengthLQueue(LQueue *Q){
 	if(IsEmptyLQueue(Q)==TRUE){
 		return 0;
 	}
-	int count=1;
+	int count=0;
 	Node *p=Q->front;
-	for(;p->next!=NULL;){
+	while(p->next!=NULL){
 		p=p->next;
 		count++;
 	}
 	return count;
 }
-
+//OK
 Status EnLQueue(LQueue *Q, void *data){
-	Node *p1=NULL;
+	/*Node *p1=NULL;
 	p1=(Node *)malloc(Q->data_size);
 	printf("%d\n",*(int*)Q->front->data);
 	if(Q->front==NULL){
@@ -260,8 +265,13 @@ Status EnLQueue(LQueue *Q, void *data){
 	p1->data=data;
 	p1->next=NULL;
 	Q->rear=p1;
-	return TRUE;
+	return TRUE;*/ 
+	Q->rear->next=(Node *)malloc(Q->data_size);
+	Q->rear->data=data;
+	Q->rear=Q->rear->next;
+	Q->rear->next=NULL;//尾节点无数据； 
 }
+//OK
 
 Status DeLQueue(LQueue *Q){
 	if(IsEmptyLQueue(Q)){
@@ -269,46 +279,54 @@ Status DeLQueue(LQueue *Q){
 	}
 	Node *p1;
 	p1=Q->front;
-	if(Q->front->next!=NULL){
-		Q->front=Q->front->next;
-		free(p1);
-	}
-	else {
+	//if(Q->front->next!=NULL){
+	Q->front=Q->front->next;
+	free(p1);
+	//}
+	/*else {
 		Q->front=NULL;
 		Q->rear=NULL;
 		free(p1);
-	}
+	}*/ 
 	return TRUE;
 } 
+//ok
 
 void ClearLQueue(LQueue *Q){
 	Node *p1=NULL,*p2=NULL;
 	p1=Q->front;
-	for(;p1->next!=NULL;){
+	/*for(p1->next!=NULL){
 		p2=p1->next;
 		free(p1);
 		p1=p2;
 	}
 	free(p1);
 	Q->front=NULL;
-	Q->rear=NULL;
-}
+	Q->rear=NULL;*/ 
+	while(p1->next!=NULL){
+		p2=p1->next;
+		free(p1);
+		p1=p2;
+	}
+	Q->front=p1;
+} 
+//ok还可以优化为使用出队函数； 
 
 Status TraverseLQueue(const LQueue *Q, void (*foo)(void *q)){
-	Node *p=Q->front;
 	if(IsEmptyLQueue(Q)==TRUE){
 		printf("空队\n");
 		return FALSE;
 	}
-	while(p!=NULL){
+	Node *p=Q->front;
+	while(p->next!=NULL){
 		(*foo)(p->data);
-		printf("\n\n%d\n\n",*(int*)p->data);
+		//printf("\n\n%d\n\n",*(int*)p->data);
 		p=p->next;
 	}
 	return TRUE;
 }
 
-void LPrint(void *q){
+/*void LPrint(void *q){
 	int choose=0,a=0;
     void*p=q;
     while(a==0)
@@ -335,6 +353,16 @@ void LPrint(void *q){
             default:printf("无效选择，请重选\n");
         }
 	}
+}*/
+
+
+void LPrint_int(void *q){
+	printf("%d\n",*(int*)q);
+}
+void LPrint_float(void *q){
+	printf("%f\n",*(float*)q);
+}void LPrint_char(void *q){
+	printf("%c\n",*(char*)q);
 }
 
 

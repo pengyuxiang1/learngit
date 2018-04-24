@@ -245,7 +245,7 @@ Status TraverseLQueue(const LQueue *Q, void (*foo)(void *q));
  *	@return		 : None
  *  @notice      : None
  */
- void LPrint(void *q);
+ //void LPrint(void *q);
  
  /**************************************************************
 *	End-Multi-Include-Prevent Section
@@ -254,5 +254,8 @@ Status TraverseLQueue(const LQueue *Q, void (*foo)(void *q));
 
 
 void my_scanf(AQueue *AQ);
+void LPrint_int(void *q);
+void LPrint_float(void *q);
+void LPrint_char(void *q); 
 
 #endif // QUEUE_H_INCLUDED
