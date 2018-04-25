@@ -58,10 +58,6 @@ Status GetHeadAQueue(AQueue *Q, void *e)
 
 int LengthAQueue(AQueue *Q)
 {
-	/*if(Status IsFullAQueue(Q)){
-		return MAXQUEUE;
-	} //ƒ«ƒ„µƒ≈–∂œ «≤ª «ø’µƒ ±∫ÚæÕ”–Œ Ã‚¡À°£  
-	else */
 	if(IsEmptyAQueue(Q)){
 		return 0;
 	} 
@@ -75,8 +71,7 @@ int LengthAQueue(AQueue *Q)
 }
 
 Status EnAQueue(AQueue *Q, void *data)   //ÃÌº”≤Œ ˝ void *data,”√¿¥÷∏ æ“™»Î’ª‘™Àÿµƒµÿ÷∑ 
-{
-	//»Î∂”Œ™ ≤√¥“™≈–∂œ «∑ÒŒ™ø’∞°£ø≤ª”¶∏√ «≈–∂œ”–√ª”–≥ı ºªØ¬£ø 
+{ 
 	if(IsFullAQueue(Q)){
 		printf("∂”¡–¬˙¡À\n");
 		return FALSE; 
@@ -84,8 +79,6 @@ Status EnAQueue(AQueue *Q, void *data)   //ÃÌº”≤Œ ˝ void *data,”√¿¥÷∏ æ“™»Î’ª‘™À
 	Q->rear++;
 	Q->data[Q->rear]=malloc(Q->data_size);
 	memcpy(Q->data[Q->rear],data,Q->data_size);
-	
-	//printf("%d\n",*(int*)Q->data[Q->rear]);
 	return TRUE;
 }
 
@@ -97,7 +90,7 @@ Status DeAQueue(AQueue *Q)
 	}
 	Q->front++;
 	Q->data[Q->front]=NULL;
-	//“™≤ª“™º«◊°’‚∏ˆ±ÌÕ∑ ˝æ›£ø£ø 
+	//≤ªº«◊°’‚∏ˆ±ÌÕ∑ ˝æ›
 	return TRUE; 
 }
 
@@ -143,7 +136,6 @@ void APrint(void *q)
 void my_scanf(AQueue *AQ)
 {	
 	int a;
-	//InitAQueue(&AQ);≈–∂œ «∑Ò≥ı ºªØ 
 	void *e;
 	int b;
 	char c;
@@ -193,19 +185,17 @@ void my_scanf(AQueue *AQ)
 			}
 			default :printf("«Î ‰»Î1~4\n");
 		}
-//	}while(a!=4);
+//	}while(a!=4);//‘› ±≤ª—≠ª∑¡À 
 } 
 
 
 //¡¥ Ω∂”¡–
-
-
 void InitLQueue(LQueue *Q){
 	Q->front=(Node*)malloc(Q->data_size);
 	Q->front->next=NULL;
 	Q->rear=Q->front;
 }
-//OK 
+
  
 void DestoryLQueue(LQueue *Q){
 	Node *p1=NULL,*p2=NULL;
@@ -215,11 +205,9 @@ void DestoryLQueue(LQueue *Q){
 		free(p1);
 		p1=p2;
 	}
-	//free(p1);
 	Q->front=p1;
-	//Q->rear=NULL;
 }
-// ok 
+
 Status IsEmptyLQueue(const LQueue *Q){
 	if(Q->front==Q->rear){
 		return TRUE;
@@ -249,7 +237,7 @@ int LengthLQueue(LQueue *Q){
 	}
 	return count;
 }
-//OK
+
 Status EnLQueue(LQueue *Q, void *data){
 	/*Node *p1=NULL;
 	p1=(Node *)malloc(Q->data_size);
@@ -265,13 +253,13 @@ Status EnLQueue(LQueue *Q, void *data){
 	p1->data=data;
 	p1->next=NULL;
 	Q->rear=p1;
-	return TRUE;*/ 
+	return TRUE;*/ //¡Ì“ª÷÷ µœ÷∑Ω Ω£¨”√”⁄Õ∑Ω⁄µ„”– ˝æ› 
 	Q->rear->next=(Node *)malloc(Q->data_size);
 	Q->rear->data=data;
 	Q->rear=Q->rear->next;
 	Q->rear->next=NULL;//Œ≤Ω⁄µ„Œﬁ ˝æ›£ª 
 }
-//OK
+
 
 Status DeLQueue(LQueue *Q){
 	if(IsEmptyLQueue(Q)){
@@ -279,30 +267,15 @@ Status DeLQueue(LQueue *Q){
 	}
 	Node *p1;
 	p1=Q->front;
-	//if(Q->front->next!=NULL){
 	Q->front=Q->front->next;
 	free(p1);
-	//}
-	/*else {
-		Q->front=NULL;
-		Q->rear=NULL;
-		free(p1);
-	}*/ 
 	return TRUE;
 } 
-//ok
+
 
 void ClearLQueue(LQueue *Q){
 	Node *p1=NULL,*p2=NULL;
 	p1=Q->front;
-	/*for(p1->next!=NULL){
-		p2=p1->next;
-		free(p1);
-		p1=p2;
-	}
-	free(p1);
-	Q->front=NULL;
-	Q->rear=NULL;*/ 
 	while(p1->next!=NULL){
 		p2=p1->next;
 		free(p1);
@@ -320,42 +293,11 @@ Status TraverseLQueue(const LQueue *Q, void (*foo)(void *q)){
 	Node *p=Q->front;
 	while(p->next!=NULL){
 		(*foo)(p->data);
-		//printf("\n\n%d\n\n",*(int*)p->data);
 		p=p->next;
 	}
 	return TRUE;
 }
-
-/*void LPrint(void *q){
-	int choose=0,a=0;
-    void*p=q;
-    while(a==0)
-    {
-        printf("\n\t1:int 2:float 3:char\n\t¥À ±ƒ„¥¥Ω®µƒ¡¥±Ì « ≤√¥ ˝æ›¿‡–Õµƒ£¨«Î ‰»Î£∫");
-        scanf(" %d",&choose);
-        switch(choose)
-        {
-            case 1:{
-            	printf(" %d\n",*(int*)p);
-            	a=1;
-				break;
-			}
-            case 2:{
-            	printf(" %f\n",*(float*)p);
-            	a=1;
-				break;
-			}
-            case 3:{
-            	printf(" %c\n",*(char*)p);
-            	a=1;
-				break;
-			}
-            default:printf("Œﬁ–ß—°‘Ò£¨«Î÷ÿ—°\n");
-        }
-	}
-}*/
-
-
+//LPrint”√¡À»˝∏ˆ’Î∂‘≤ªÕ¨∂”¡– 
 void LPrint_int(void *q){
 	printf("%d\n",*(int*)q);
 }

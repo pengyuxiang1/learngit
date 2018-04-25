@@ -6,24 +6,12 @@
 #include"queue.h"
 
 int main(void)
-{
-	/*void InitAQueue(AQueue *Q);
-	void DestoryAQueue(AQueue *Q);	
-	Status IsEmptyAQueue(const AQueue *Q);
-	Status IsFullAQueue(const AQueue *Q);
-	Status GetHeadAQueue(AQueue *Q, void *e);
-	int LengthAQueue(AQueue *Q);
-	Status EnAQueue(AQueue *Q, void *data);
-	Status DeAQueue(AQueue *Q);
-	void ClearAQueue(AQueue *Q);
-	void APrint(void *q);
-	Status TraverseAQueue(const AQueue *Q, void (*foo)(void *q));
-	*/
-	
+{	
+	//定义的变量 
 	AQueue AQ;
-	InitAQueue(&AQ);
+	InitAQueue(&AQ);//默认初始化 
 	LQueue LQ;
-	InitLQueue(&LQ);	
+	InitLQueue(&LQ);//默认初始化	
 	void *e;
 	int choose1,choose2,choose3;
 	int count=0;
@@ -33,9 +21,19 @@ int main(void)
  	printf("\t1.循环队列\n");
  	printf("\t2.链式队列\n");
  	printf("\t3.退出\n");
- 	while(scanf("%d",&choose1)!=1){
+ 	while(scanf(" %d",&choose1)!=1){
 		printf("输入错误，请重新输入\n");
 	}
+	
+	if(choose1==3){
+		printf("再见\n") ;
+		return 0;
+	} //退出 
+	if(choose1!=1&&choose1!=2){
+		printf("无效输入，再见\n") ;
+		return 0;
+	}//判断输入； 
+	
 	do{
 		if(choose1==1){
 			printf("\t循环队列\n");
@@ -51,7 +49,7 @@ int main(void)
 			printf("\t10.遍历函数操作\n");
 			printf("\t0. 退出\n");
 			printf("\t请输入1~11号数字\n");
-			while(scanf("%d",&choose2)!=1){
+			while(scanf(" %d",&choose2)!=1){
 				printf("输入错误，请重新输入\n");
 			}
 			
