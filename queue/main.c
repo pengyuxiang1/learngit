@@ -26,7 +26,7 @@ int main(void)
 	InitLQueue(&LQ);	
 	void *e;
 	int choose1,choose2,choose3;
-
+	int count=0;
 	
 
 	printf("\t选择循环队列还是链式队列\n");
@@ -196,19 +196,22 @@ int main(void)
 				case 6:{
 					printf("请输入数据:\n");
 					if(choose3==1){
-						int a;
-						scanf(" %d",&a);
-						EnLQueue(&LQ,&a);
+						int a[100];
+						scanf(" %d",&a[count]);
+						EnLQueue(&LQ,&a[count]);
+						count++;
 					} 
 					if(choose3==2){
-						char a;
-						scanf(" %c",&a);
-						EnLQueue(&LQ,&a);
+						char a[100];
+						scanf(" %c",&a[count]);
+						EnLQueue(&LQ,&a[count]);
+						count++;
 					}
 					if(choose3==3){
-						float a;
-						scanf(" %f",&a);
-						EnLQueue(&LQ,&a);
+						float a[100];
+						scanf(" %f",&a[count]);
+						EnLQueue(&LQ,&a[count]);
+						count++;
 					}
               		printf("入队成功\n");
                     break;
